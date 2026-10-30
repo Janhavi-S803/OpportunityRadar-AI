@@ -1,26 +1,220 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================
+   OpportunityRadar AI Design System
+   ============================================ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --primary: #102A43;
+  --secondary: #2563EB;
+  --accent: #06B6D4;
+  --background: #F8FAFC;
+  --card: #FFFFFF;
+  --foreground: #0F172A;
+  --muted: #64748B;
+  --border: #E2E8F0;
+  --input: #F1F5F9;
+  --ring: #2563EB;
+
+  /* Semantic Colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #06B6D4;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark Mode */
+.dark {
+  --primary: #1E3A5F;
+  --background: #0B1120;
+  --card: #111827;
+  --foreground: #F1F5F9;
+  --muted: #94A3B8;
+  --border: #1E293B;
+  --input: #1E293B;
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-hover {
+  transition: all 0.2s ease;
+}
+.card-hover:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.radar-pulse {
+  animation: radar-pulse 2s ease-in-out infinite;
+}
+
+@keyframes radar-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Match Score Badge Colors */
+.match-excellent { background: #DCFCE7; color: #15803D; }
+.match-good { background: #D1FAE5; color: #065F46; }
+.match-fair { background: #FEF3C7; color: #92400E; }
+.match-low { background: #FEE2E2; color: #991B1B; }
+
+/* Eligibility Status */
+.eligible-badge { background: #DCFCE7; color: #15803D; border: 1px solid #BBF7D0; }
+.potentially-badge { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+.not-eligible-badge { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+.insufficient-badge { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
+
+/* Kanban Column Colors */
+.kanban-interested { border-top: 3px solid #6366F1; }
+.kanban-preparing { border-top: 3px solid #F59E0B; }
+.kanban-applied { border-top: 3px solid #3B82F6; }
+.kanban-assessment { border-top: 3px solid #8B5CF6; }
+.kanban-interview { border-top: 3px solid #06B6D4; }
+.kanban-selected { border-top: 3px solid #10B981; }
+.kanban-rejected { border-top: 3px solid #EF4444; }
+.kanban-withdrawn { border-top: 3px solid #6B7280; }
+
+/* Deadline Urgency */
+.deadline-critical { background: #FEF2F2; color: #991B1B; }
+.deadline-soon { background: #FFF7ED; color: #9A3412; }
+.deadline-normal { background: #F0FDF4; color: #166534; }
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Demo Badge */
+.demo-badge {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  color: #92400E;
+  border: 1px solid #FCD34D;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Research Status Indicators */
+.status-searching { color: #3B82F6; }
+.status-browsing { color: #8B5CF6; }
+.status-extracting { color: #06B6D4; }
+.status-validating { color: #F59E0B; }
+.status-saving { color: #10B981; }
+.status-completed { color: #059669; }
+.status-failed { color: #EF4444; }
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
 }
